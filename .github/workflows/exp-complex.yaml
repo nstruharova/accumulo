@@ -73,6 +73,32 @@ jobs:
         with:
           task: get-measurement
           label: 'Build measurement'
+      - name: Show Energy Results
+        if: always()
+        uses: green-coding-berlin/eco-ci-energy-estimation@4eec5ab2253f0f13ce9dae785c06d9f8c88e6d44 # use hash or @vX here (See note below)
+        id: total-measurement-step
+        with:
+          task: display-results
+      - name: Upload total energy data artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: total-energy-data
+          path: /tmp/eco-ci/total-data.json
+
+      - name: Upload lap energy data artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: lap-energy-data
+          path: /tmp/eco-ci/lap-data.json
+
+      - name: Upload pom.xml artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: pom.xml
+          path: pom.xml
   # more complete builds with tests
   mvn:
     needs: fastbuild
