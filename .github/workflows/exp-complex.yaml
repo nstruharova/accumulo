@@ -62,23 +62,26 @@ jobs:
         uses: green-coding-berlin/eco-ci-energy-estimation@4eec5ab2253f0f13ce9dae785c06d9f8c88e6d44 # use hash or @vX here (See note below)
         with:
           task: start-measurement
-      - name: Build with Maven (Fast Build)
-        timeout-minutes: 20
-        run: mvn -B -V -e -ntp "-Dstyle.color=always" clean package dependency:resolve -DskipTests -DskipFormat -DverifyFormat
-        env:
-          MAVEN_OPTS: -Djansi.force=true
       - name: Build measurement
         if: always()
         uses: green-coding-berlin/eco-ci-energy-estimation@4eec5ab2253f0f13ce9dae785c06d9f8c88e6d44 # use hash or @vX here (See note below)
         with:
           task: get-measurement
           label: 'Build measurement'
+      - name: Build with Maven
+        run: mvn clean:clean compiler:compile -f pom.xml
+        working-directory: ${{github.workspace}}
       - name: Show Energy Results
         if: always()
         uses: green-coding-berlin/eco-ci-energy-estimation@4eec5ab2253f0f13ce9dae785c06d9f8c88e6d44 # use hash or @vX here (See note below)
         id: total-measurement-step
         with:
           task: display-results
+      # - name: Build with Maven (Fast Build)
+      #   timeout-minutes: 20
+      #   run: mvn -B -V -e -ntp "-Dstyle.color=always" clean package dependency:resolve -DskipTests -DskipFormat -DverifyFormat
+      #   env:
+      #     MAVEN_OPTS: -Djansi.force=true
       - name: Upload total energy data artifact
         if: always()
         uses: actions/upload-artifact@v3
