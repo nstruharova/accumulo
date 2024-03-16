@@ -37,8 +37,3 @@
 
 # MacOS ignores
 .DS_Store
-
-### Doxygen ###
-/xml/
-/html/
-/latex/
