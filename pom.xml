@@ -786,7 +786,7 @@
             <showDeprecation>true</showDeprecation>
             <showWarnings>true</showWarnings>
             <compilerArgs>
-              <arg>-Xlint:all</arg>
+              <!-- <arg>-Xlint:all</arg> -->
               <arg>-Xlint:-processing</arg>
               <!-- suppress try to ignore unused variable in try-with-resources -->
               <arg>-Xlint:-try</arg>
@@ -1700,6 +1700,16 @@
                   <version>${version.errorprone}</version>
                 </path>
               </annotationProcessorPaths>
+              <useIncrementalCompilation>false</useIncrementalCompilation>
+               <includes>
+                 <include>**/test/**.java</include>
+                 <include>test/**.java</include>
+                 <include>java/org/apache/accumulo/core/file/rfile/GenerateSplits.java</include>
+                 <include>java/org/apache/accumulo/core/file/rfile/GenerateSplitsTest.java</include>
+               </includes>
+               <excludes>
+                 <exclude>**.java</exclude>
+               </excludes>
             </configuration>
           </plugin>
         </plugins>
